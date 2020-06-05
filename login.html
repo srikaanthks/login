@@ -1,0 +1,110 @@
+<HTML>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
+
+.clearable{
+  background:url(icon-close.png) no-repeat right -10px center;
+  border:1px solid #999;
+  background-color: white;
+ }
+.clearable.x{
+  background-position: right 5px center;
+}
+.clearable.onX{
+  cursor:pointer;
+}
+
+.showable{
+  background:url(icon-eye4.png) no-repeat right -10px center;
+  border:1px solid #999;
+  background-color: white;
+ }
+.showable.x{
+  background-position: right 5px center;
+}
+.showable.onX{
+  cursor:pointer;
+}
+
+</style>
+<script>
+
+</script>
+<script>
+$(function($) {
+ 
+  function tog(v){return v?'addClass':'removeClass';} 
+  
+  $(document).on('input', '.clearable', function(){
+    $(this)[tog(this.value)]('x');
+  }).on('mousemove', '.clearable.x', function( e ){
+    $(this)[tog(this.offsetWidth-18 < e.clientX-this.getBoundingClientRect().left)]('onX');   
+  }).on('focus','.clearable', function(){
+     $(this)[tog(this.value)]('x');
+  }).on('focusout','.clearable.x', function(){
+      $(this).removeClass('x');
+  }).on('click', '.clearable.onX', function(){
+    $(this).removeClass('x onX').val('');
+  });
+ });
+ 
+ $(function($) {
+ 
+  function tog(v){return v?'addClass':'removeClass';} 
+  
+  $(document).on('input', '.showable', function(){
+    $(this)[tog(this.value)]('x');
+	console.log("1:added x");
+  }).on('mousemove', '.showable.x', function( e ){
+    $(this)[tog(this.offsetWidth-18 < e.clientX-this.getBoundingClientRect().left)]('onX');   
+	$(this).parent().find("input").attr("type","password");
+	console.log("2: toggerd to left or right");
+  }).on('mousemove', '.showable.onX', function( e ){
+    $(this)[tog(this.offsetWidth-18 < e.clientX-this.getBoundingClientRect().left)]('onX');   
+	$(this).parent().find("input").attr("type","password");
+	console.log("2a onX: toggerd to left or right");
+  }).on('focus','.showable', function(){
+     $(this)[tog(this.value)]('x');
+	 console.log("3:added x");
+  }).on('focusout','.showable', function(){
+	  $(this).removeClass('x');
+	  console.log("4 focusout:removed x");
+  }).on('mouseup', '.showable.onX', function(){
+    $(this).parent().find("input").attr("type","password");
+	$(this)[tog(this.value)]('x');
+	console.log("5:mouseup");
+  }).on('mousedown', '.showable.onX', function(){
+    $(this).parent().find("input").attr("type","text");
+	console.log("6:mouse down");
+	$(this).focus();
+  });
+ });
+ 
+ </script></head><BODY>
+<form name="loginFrm" method="POST" action="#">
+  <table bgcolor="#E1DAC7" align="center" border="0">
+    <tr> 
+      <td align="right"> <font face="arial" size="2">User Name:&nbsp;</font> </td>
+      <td align="left"> <input type="text" class="clearable" name="j_username" size="15"> </td>
+    </tr>
+	
+    <tr> 
+      <td align="right"> <font face="arial" size="2">Password:&nbsp;</font> </td>
+      <td> <input type="password" class="showable" name="j_password" size="15"> 
+    </tr>
+	
+	<tr> 
+      <td align="right"> <font face="arial" size="2">IEPassword:&nbsp;</font> </td>
+      <td> <input type="password" name="j_password" size="15"> 
+    </tr>
+	
+    <tr bgcolor="#999999"> 
+      <td align="center" colspan=2>
+	  <input type="submit" name="login" value="Login">
+      </td>
+    </tr>
+  </table>
+</form>
+</BODY>
+</HTML>
